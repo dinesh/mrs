@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  mbid: MyString
+  name: MyString
+  modpending: 1
+  sortname: MyString
+  artist_type: 1
+
+two:
+  mbid: MyString
+  name: MyString
+  modpending: 1
+  sortname: MyString
+  artist_type: 1

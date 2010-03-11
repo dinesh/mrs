@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  puid_id: 1
+  track_id: 1
+  use_count: 1
+
+two:
+  puid_id: 1
+  track_id: 1
+  use_count: 1

@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  artist_ref: 1
+  name: MyString
+  time_used: 1
+  last_used: 2010-03-11 03:04:32
+  modpending: 1
+
+two:
+  artist_ref: 1
+  name: MyString
+  time_used: 1
+  last_used: 2010-03-11 03:04:32
+  modpending: 1

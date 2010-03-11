@@ -1,0 +1,30 @@
+GenPUID 1.4
+
+- Optimized fingerprinting and analysis, especially for larger files
+- Added -exclude <expr> parameter for filtering large collections 
+- Support -xml=file to write data to a file
+
+GenPUID 1.3
+
+- Updated Ogg/FLAC libraries
+- Added -ext option
+- Fixed cache/file interactions
+
+GenPUID 1.2
+
+- Support WAV files with 'fact' chunks
+- Fixed bug processing some WMA files
+- Added -nopuid option
+- Make -data option work with newly submitted tracks
+- Mac/Linux: fixed case running genpuid without explicit path
+- Changed XML format from
+
+    <track file="">pending</track>
+
+  to
+
+    <track file="" status="pending"></track>
+
+GenPUID 1.1.1
+
+- Fixed case where metadata was not always returned with -rmd

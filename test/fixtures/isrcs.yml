@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  track: 1
+  isrc: MyString
+  source: 1
+  modpending: 1
+
+two:
+  track: 1
+  isrc: MyString
+  source: 1
+  modpending: 1

@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  mbid: 1
+  artist: 1
+  name: MyString
+  status: 1
+  script: 1
+  language: 1
+  quality: 1
+
+two:
+  mbid: 1
+  artist: 1
+  name: MyString
+  status: 1
+  script: 1
+  language: 1
+  quality: 1

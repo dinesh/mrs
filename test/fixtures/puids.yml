@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  puid: MyString
+  lookupcount: 1
+
+two:
+  puid: MyString
+  lookupcount: 1

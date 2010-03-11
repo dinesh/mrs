@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  album: 1
+  track: 1
+  sequence: 1
+  modpending: 1
+
+two:
+  album: 1
+  track: 1
+  sequence: 1
+  modpending: 1

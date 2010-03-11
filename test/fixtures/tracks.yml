@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  artist: 1
+  name: MyString
+  length: 1
+  year: 1
+  mbid: 1
+
+two:
+  artist: 1
+  name: MyString
+  length: 1
+  year: 1
+  mbid: 1

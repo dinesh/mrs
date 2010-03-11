@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  album: 1
+  country: 1
+  release_date: 2010-03-11 03:10:13
+  catno: MyString
+  barcode: MyString
+  format: MyString
+  release_type: 1
+
+two:
+  album: 1
+  country: 1
+  release_date: 2010-03-11 03:10:13
+  catno: MyString
+  barcode: MyString
+  format: MyString
+  release_type: 1

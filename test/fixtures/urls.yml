@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  mbid: 1
+  url: MyString
+  description: MyText
+  refcount: 1
+  modpending: 1
+
+two:
+  mbid: 1
+  url: MyString
+  description: MyText
+  refcount: 1
+  modpending: 1
