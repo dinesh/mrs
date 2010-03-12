@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  http_url: MyString
+  ftp: MyString
+  lan_settings: MyText
+  status: MyString
+  quality: 1
+
+two:
+  http_url: MyString
+  ftp: MyString
+  lan_settings: MyText
+  status: MyString
+  quality: 1

@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  collection_id: 1
+  audio_file_id: 1
+  status: MyString
+  lookupcount: 1
+
+two:
+  collection_id: 1
+  audio_file_id: 1
+  status: MyString
+  lookupcount: 1

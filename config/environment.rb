@@ -8,10 +8,13 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
   config.time_zone = 'UTC'
-
+  config.gem 'paperclip'
+  config.gem 'authlogic'
 end
 
 SETTINGS = {
   :genpuid_exe => File.join( RAILS_ROOT, 'vendor', 'genpuid', 'genpuid' ),
-  :gen_key => '57aae6071e74345f69143baa210bda87'
+  :gen_key => '57aae6071e74345f69143baa210bda87',
+  :lastfm_exe => File.join(RAILS_ROOT, 'vendor', 'lastfm', 'lastfmfpclient'), 
+  :lastfm_dir => File.join(RAILS_ROOT, 'vendor', 'lastfm')
 }

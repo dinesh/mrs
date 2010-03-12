@@ -1,0 +1,27 @@
+MRS
+------------
+Music Recommendation System
+
+Done:
+	- managing Collections of remote users through central position
+	- fingerprint support from musicbrainz and last.fm
+	- Coverart support for tracks from last.fm/ amazon
+	- Album asin information from  amazon
+	
+
+Doing: 
+    - Better collection scanning 
+    - Seed Data Support for -- Magnatagatune database (from csv)
+                          -- /data/lastfm (artists, tags, users)
+                          -- audioscrobbler profile data (artist, user, playcount)
+TODO 
+                          
+	- Moderators activerecord support
+	- CF algorithm and hadoop reduce jobs for using Recommendation engine
+	- Versioning for activerecord models, tracks, albums, artists, audio_files
+	- Marsyas Integration + Fingerprints + Echonest analysis Api
+	- Tagging support with better annotations and Tag hierachy classification
+	- Clustering of feature vector, training for tag, mood and genres
+	- Voting system for moderators
+	- Final Radio Desing + server Playback + streaming servers  
+	- Playdar support + Lan Collection Scanning
