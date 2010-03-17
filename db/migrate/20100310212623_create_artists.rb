@@ -6,7 +6,8 @@ class CreateArtists < ActiveRecord::Migration
       t.integer :modpending, :default => 0
       t.string :sortname
       t.integer :artist_type
-
+      t.date :begin_date
+      t.date :end_date
       t.timestamps
     end
   end

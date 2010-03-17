@@ -3,7 +3,6 @@ class CreatePuids < ActiveRecord::Migration
     create_table :puids do |t|
       t.string :puid
       t.integer :lookupcount, :default => 0
-
       t.timestamps
     end
   end

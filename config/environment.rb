@@ -18,3 +18,10 @@ SETTINGS = {
   :lastfm_exe => File.join(RAILS_ROOT, 'vendor', 'lastfm', 'lastfmfpclient'), 
   :lastfm_dir => File.join(RAILS_ROOT, 'vendor', 'lastfm')
 }
+
+require 'ftools'
+require 'uri'
+require 'hpricot'
+require 'rbrainz'
+require 'open4'
+require 'id3lib'

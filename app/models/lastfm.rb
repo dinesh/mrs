@@ -3,6 +3,7 @@ require 'uri'
 require 'hpricot'
 require 'open4'
 require 'scrobbler'
+require 'id3lib'
 
 class Lastfm
   
@@ -29,7 +30,9 @@ class Lastfm
   end
   
   def self.fingerprint(file)
-    puts '' * 10
+    puts '==' * 10
+    tag = ID3Lib::Tag.new(file)
+    puts "#{tag.title} #{tag.album} #{tag.length}"
     command = "./lastfmfpclient \"#{file}\""
     puts command
     status = Open4.popen4(command) do |pid, stdin, stdout, stderr|
@@ -48,6 +51,3 @@ class Lastfm
   end
   
 end
-
-Lastfm.smart_scan( File.join(RAILS_ROOT, 'public', 'test_collection'))
-  

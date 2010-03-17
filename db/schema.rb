@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100312190532) do
+ActiveRecord::Schema.define(:version => 20100316224220) do
 
   create_table "album_amazon_asins", :force => true do |t|
     t.integer  "album_id"
@@ -57,6 +57,8 @@ ActiveRecord::Schema.define(:version => 20100312190532) do
     t.integer  "modpending",  :default => 0
     t.string   "sortname"
     t.integer  "artist_type"
+    t.date     "begin_date"
+    t.date     "end_date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -105,7 +107,8 @@ ActiveRecord::Schema.define(:version => 20100312190532) do
   end
 
   create_table "collections", :force => true do |t|
-    t.integer  "user_id",                        :null => false
+    t.integer  "user_id",                         :null => false
+    t.string   "name",            :default => "", :null => false
     t.datetime "last_update"
     t.integer  "trackcount",      :default => 0
     t.integer  "albumcount",      :default => 0
@@ -113,6 +116,13 @@ ActiveRecord::Schema.define(:version => 20100312190532) do
     t.integer  "quality",         :default => 0
     t.integer  "audio_filecount", :default => 0
     t.integer  "setting"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "countries", :force => true do |t|
+    t.string   "isocode"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -159,6 +169,7 @@ ActiveRecord::Schema.define(:version => 20100312190532) do
     t.integer  "length"
     t.integer  "year"
     t.integer  "mbid"
+    t.integer  "audio_file_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
