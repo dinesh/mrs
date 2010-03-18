@@ -5,17 +5,25 @@ Music Recommendation System
 Done:
 	- managing Collections of remote users through central position
 	- fingerprint support from musicbrainz and last.fm
-	- Coverart support for tracks from last.fm/ amazon
+	- CoverArts support for tracks from last.fm/ amazon
 	- Album asin information from  amazon
-	
+	- Country iso codes
 
-Doing: 
+Doing:
+ 	
     - Better collection scanning 
+	- Admin interface with active_scaffold
     - Seed Data Support for -- Magnatagatune database (from csv)
                           -- /data/lastfm (artists, tags, users)
                           -- audioscrobbler profile data (artist, user, playcount)
 TODO 
-                          
+    
+ Miner:
+	-- Fingerprint & insert puid to track by id3tag
+	-- Basename change before saving for paperclip
+	-- User-wise collection
+
+ Major:                       
 	- Moderators activerecord support
 	- CF algorithm and hadoop reduce jobs for using Recommendation engine
 	- Versioning for activerecord models, tracks, albums, artists, audio_files
@@ -25,3 +33,5 @@ TODO
 	- Voting system for moderators
 	- Final Radio Desing + server Playback + streaming servers  
 	- Playdar support + Lan Collection Scanning
+	- Paperclip for mp4, m3a
+	- Playlist based on tags

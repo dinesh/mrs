@@ -1,7 +1,7 @@
 class CreateAlbums < ActiveRecord::Migration
   def self.up
     create_table :albums do |t|
-      t.integer :mbid
+      t.string :mbid
       t.integer :artist_id
       t.string :name
       t.integer :status

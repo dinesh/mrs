@@ -5,7 +5,7 @@ class CreateTracks < ActiveRecord::Migration
       t.string :name
       t.integer :length
       t.integer :year
-      t.integer :mbid
+      t.string :mbid
       t.integer :audio_file_id
       t.timestamps
     end

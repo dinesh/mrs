@@ -15,7 +15,7 @@ class Artist < ActiveRecord::Base
   def self.get_instance_by_mbid(url)
     uuid = Artist.model(url).uuid
     artist = Artist.query.get_artist_by_id(uuid, @@artist_includes) 
-     
+     p "=== Artist === "
     p "ID            : #{artist.id.uuid}"
     p "Name          : #{artist.name}"
     p "Sort_name     : #{artist.sort_name}"
@@ -28,8 +28,6 @@ class Artist < ActiveRecord::Base
   
     artist_model  = Artist.find_by_mbid(uuid)
     artist_model = Artist.create({:sortname => artist.sort_name, 
-                                #  :begin_date => DateTime.parse(artist.begin_date),
-                                #  :end_date => DateTime.parse(artist.end_date.to_s), 
                                   :mbid => artist.id.uuid, 
                                   :name => artist.name }) if artist_model.nil?
     artist_model

@@ -15,5 +15,12 @@ namespace :finger do
       end
   end
   
+end
+
+namespace :db do
   
+  desc "Import Countries from db/fixtures/countries.sql"
+  task :country => :environment do
+     Country.connection.execute(IO.read("#{RAILS_ROOT}/db/fixtures/mysql-countries-table.sql"))
+  end
 end

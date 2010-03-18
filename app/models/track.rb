@@ -1,8 +1,8 @@
 class Track < ActiveRecord::Base
   acts_as_polymorphic_paperclip 
   belongs_to :artist
-  has_many :track_puids
-  has_many :puids, :through => :track_puids
+  has_many :trackpuids
+  has_many :puids, :through => :trackpuids
   include MbCache
   
   @@track_includes = MusicBrainz::Webservice::TrackIncludes.new(:puids => true, :releases => true)
@@ -10,6 +10,7 @@ class Track < ActiveRecord::Base
   def self.get_instance_by_mbid(url,artist_item, puid)
       uuid = Track.model(url).uuid
       t = Track.query.get_track_by_id(uuid, @@track_includes)
+       p "=== Track === "
         p "ID            : #{t.id.uuid}"
         p "Name          : #{t.title}"
         p "Releases      : #{t.releases.map(&:title).join('; ')}"
@@ -21,8 +22,9 @@ class Track < ActiveRecord::Base
         track_model = Track.find_by_mbid(uuid) 
         track_model = Track.create({:artist => artist_item, :name => t.title, 
                                     :length => t.duration, :mbid => uuid }) if track_model.nil?
-        puid_model = Puid.find_or_create(puid)
-        self.puids << puid_model unless self.puids.include?(puid_model)                            
+        puid_model = Puid.find_or_create_by_puid(puid)
+        track_model.puids << puid_model unless track_model.puids.include?(puid_model)                            
         track_model
   end
+  
 end

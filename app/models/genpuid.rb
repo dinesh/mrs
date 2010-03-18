@@ -27,7 +27,7 @@ class Genpuid
       entry = File.join(dir, entry)
       if File.file?(entry) and File.extname(entry) == '.mp3'
         @file_chunk.push(entry) 
-        process(@file_chunk) if @file_chunk.size >= 13
+        process(@file_chunk) if @file_chunk.size >= 20
       elsif File.directory?(entry) && entry != '.' && entry != '..'
         recurse(entry)
       end
@@ -64,7 +64,7 @@ class Genpuid
   end
   
   def set_metadata(file, puid, status)
-    
+    return unless Puid.find_by_puid(puid).nil?
     query.get_tracks(:puid => puid).each do |result|
       puts "\n" * 3
       puts "----- #{file} -------- "
@@ -74,6 +74,7 @@ class Genpuid
       artist = Artist.get_instance_by_mbid(track.artist.id)
       track.releases.each{ |release| Album.get_instance_by_mbid(release.id, artist) }
       t = Track.get_instance_by_mbid(track.id, artist, puid)
+      
     end
   end
 end

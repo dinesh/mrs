@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(:version => 20100316224220) do
   end
 
   create_table "albums", :force => true do |t|
-    t.integer  "mbid"
+    t.string   "mbid"
     t.integer  "artist_id"
     t.string   "name"
     t.integer  "status"
@@ -122,7 +122,10 @@ ActiveRecord::Schema.define(:version => 20100316224220) do
 
   create_table "countries", :force => true do |t|
     t.string   "isocode"
+    t.string   "name_caps"
     t.string   "name"
+    t.string   "iso3code"
+    t.integer  "num_code"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -146,7 +149,7 @@ ActiveRecord::Schema.define(:version => 20100316224220) do
   create_table "releases", :force => true do |t|
     t.integer  "album_id"
     t.integer  "country_id"
-    t.datetime "release_date"
+    t.date     "release_date"
     t.string   "catno"
     t.string   "barcode"
     t.string   "format"
@@ -168,7 +171,7 @@ ActiveRecord::Schema.define(:version => 20100316224220) do
     t.string   "name"
     t.integer  "length"
     t.integer  "year"
-    t.integer  "mbid"
+    t.string   "mbid"
     t.integer  "audio_file_id"
     t.datetime "created_at"
     t.datetime "updated_at"
