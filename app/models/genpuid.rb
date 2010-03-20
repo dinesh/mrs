@@ -27,15 +27,16 @@ class Genpuid
       entry = File.join(dir, entry)
       if File.file?(entry) and File.extname(entry) == '.mp3'
         @file_chunk.push(entry) 
-        process(@file_chunk) if @file_chunk.size >= 20
+        process(@file_chunk) if @file_chunk.size >= 40
       elsif File.directory?(entry) && entry != '.' && entry != '..'
         recurse(entry)
       end
     end
-    process(@file_chunk) if @file_chunk.size > 1
+    process(@file_chunk) if @file_chunk.size > 20
   end
   
   def process(files)
+    puts files.inspect
     tmp_dir = File.join RAILS_ROOT, 'tmp', 'genpuid'
     Dir.mkdir(tmp_dir) unless File.exists?(tmp_dir)
     files.each {|file| File.copy(file, tmp_dir) }
@@ -49,17 +50,22 @@ class Genpuid
     proxy = URI.parse ENV['http_proxy']
     command = "#{SETTINGS[:genpuid_exe]} #{SETTINGS[:gen_key]} -m3lib=music.m3lib -proxy #{proxy.host} -xml  -r #{dir}"
     puts command
-    status = Open4.popen4(command) do |pid, stdin, stdout, stderr|
-      out = stdout.read.strip
-      gindex = out.index('<genpuid')-1
-      if gindex > 0
-        out.slice!(0..gindex)
-        xml_output = Hpricot::XML(out)
-        (xml_output/:track).each do |track|
-          file, puid, status = track.attributes['file'], track.attributes['puid'], track.attributes['status']
-            set_metadata(file, puid, status) if puid
+    begin
+      status = Open4.popen4(command) do |pid, stdin, stdout, stderr|
+        out = stdout.read.strip
+        gindex = out.index('<genpuid')-1
+        if gindex > 0
+          out.slice!(0..gindex)
+          xml_output = Hpricot::XML(out)
+          (xml_output/:track).each do |track|
+            file, puid, status = track.attributes['file'], track.attributes['puid'], track.attributes['status']
+              set_metadata(file, puid, status)  if puid
+              p "Puid doen't exist for #{track.attributes['file']} - #{track.attributes['status']}" unless puid
+          end
         end
       end
+    rescue Exception => e
+      p "Error: #{e.class} - #{e.message}"
     end
   end
   
@@ -69,11 +75,11 @@ class Genpuid
       puts "\n" * 3
       puts "----- #{file} -------- "
       track = result.entity
-  #    audio_file = AudioFile.find_by_file_file_name(File.basename(file))
-  #    audio_file = AudioFile.create(:file => File.open(track.attributes[:file])) if audio_file.nil? 
+      audio_file = AudioFile.find_by_file_file_name(File.basename(file))
+      audio_file = AudioFile.create(:file => File.open(file)) if audio_file.nil? 
       artist = Artist.get_instance_by_mbid(track.artist.id)
       track.releases.each{ |release| Album.get_instance_by_mbid(release.id, artist) }
-      t = Track.get_instance_by_mbid(track.id, artist, puid)
+      Track.get_instance_by_mbid(track.id, artist, puid, audio_file)
       
     end
   end

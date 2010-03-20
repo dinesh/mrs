@@ -12,6 +12,7 @@ class AudioFile < ActiveRecord::Base
   validates_attachment_content_type :file, :content_type => [ 'application/mp3', 'application/x-mp3', 'audio/mpeg', 'audio/mp3' ],
                                             :message => 'must be of filetype .mp3'
   
+  
   def set_mime_type(data)
     data.content_type = MIME::Types.type_for(data.original_filename).to_s
     self.file = data 

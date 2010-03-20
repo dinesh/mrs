@@ -27,9 +27,9 @@ class Artist < ActiveRecord::Base
     p "Releases      : #{artist.releases.to_a.join('; ')}"
   
     artist_model  = Artist.find_by_mbid(uuid)
-    artist_model = Artist.create({:sortname => artist.sort_name, 
-                                  :mbid => artist.id.uuid, 
-                                  :name => artist.name }) if artist_model.nil?
+    artist_model = Artist.create({:sortname => artist.sort_name.to_s, 
+                                  :mbid => artist.id.uuid.to_s, 
+                                  :name => artist.name.to_s }) if artist_model.nil?
     artist_model
   end
   

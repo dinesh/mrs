@@ -7,9 +7,13 @@ class CreateTrackpuids < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :trackpuids, :puid_id
+    add_index :trackpuids, :track_id
   end
 
   def self.down
+    remove_index :trackpuids, :puid_id
+    remove_index :trackpuids, :track_id
     drop_table :trackpuids
   end
 end

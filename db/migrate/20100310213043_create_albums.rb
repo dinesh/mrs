@@ -11,9 +11,13 @@ class CreateAlbums < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :albums, :name
+    add_index :albums, :artist_id
   end
 
   def self.down
+    remove_index :album_amazon_asins, :album_id
+    remove_index :album_amazon_asins, :last_update
     drop_table :albums
   end
 end

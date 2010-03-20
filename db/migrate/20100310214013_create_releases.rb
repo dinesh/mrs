@@ -11,9 +11,13 @@ class CreateReleases < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :releases, :album_id
+    add_index :releases, :barcode
   end
 
   def self.down
+    remove_index :releases, :album_id
+    remove_index :releases, :barcode
     drop_table :releases
   end
 end

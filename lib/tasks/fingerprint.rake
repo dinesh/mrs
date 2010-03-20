@@ -1,8 +1,8 @@
 
 namespace :finger do
   
-  desc "Scan a directory"
-  task :add, [:dir] => :environment do |t, args|
+  desc "Fingerprint a directory using genpuid"
+  task :genpuid, [:dir] => :environment do |t, args|
       c = collection = User.get_collection_for_admin
       c.reload
       p "Adding to collection: #{collection.name}"
@@ -13,6 +13,17 @@ namespace :finger do
                           :albumcount => genpuid.num_albums, :audio_filecount => genpuid.num_audio_files })
         collection.destroy if collection.stat_empty?
       end
+  end
+  
+  desc "Fingerprint a directory using lastfmfpclint"
+  task :lastfm, [:dir] => :environment do |t, args|
+    c = collection = User.get_collection_for_admin
+    c.reload
+    p "Adding to Collection: #{collection.name}"
+    if collection
+      lastfmclient = Lastfm.new(c)
+      lastfmclient.smart_scan(args.dir)
+    end
   end
   
 end

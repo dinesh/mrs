@@ -4,9 +4,11 @@ class AddAttachmentsFileToAudioFile < ActiveRecord::Migration
     add_column :audio_files, :file_content_type, :string
     add_column :audio_files, :file_file_size, :integer
     add_column :audio_files, :file_updated_at, :datetime
+    add_index :audio_files, :file_file_name
   end
 
   def self.down
+    remove_index :audio_files, :file_file_name
     remove_column :audio_files, :file_file_name
     remove_column :audio_files, :file_content_type
     remove_column :audio_files, :file_file_size

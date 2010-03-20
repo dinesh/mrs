@@ -9,9 +9,13 @@ class CreateArtistaliases < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :artistaliases, :name
+    add_index :artistaliases, :artist_id
   end
 
   def self.down
+    remove_index :artistaliases, :name
+    remove_index :artistaliases, :artist_id
     drop_table :artistaliases
   end
 end

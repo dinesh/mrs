@@ -19,7 +19,6 @@ Doing:
 TODO 
     
  Miner:
-	-- Fingerprint & insert puid to track by id3tag
 	-- Basename change before saving for paperclip
 	-- User-wise collection
 

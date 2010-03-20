@@ -25,4 +25,6 @@ require 'hpricot'
 require 'rbrainz'
 require 'open4'
 require 'id3lib'
-require 'scrobbler'
+require 'scrobbler2'
+
+Scrobbler2::Base.api_key = "b25b959554ed76058ac220b7b2e0a026"

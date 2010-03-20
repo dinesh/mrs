@@ -10,9 +10,13 @@ class CreateArtists < ActiveRecord::Migration
       t.date :end_date
       t.timestamps
     end
+    add_index :artists, :name
+    add_index :artists, :sortname
   end
 
   def self.down
+    remove_index :artists, :name
+    remove_index :artists, :sortname
     drop_table :artists
   end
 end
