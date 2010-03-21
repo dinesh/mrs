@@ -20,6 +20,9 @@ ActiveRecord::Schema.define(:version => 20100316224220) do
     t.datetime "updated_at"
   end
 
+  add_index "album_amazon_asins", ["album_id"], :name => "index_album_amazon_asins_on_album_id"
+  add_index "album_amazon_asins", ["last_update"], :name => "index_album_amazon_asins_on_last_update"
+
   create_table "albumjoins", :force => true do |t|
     t.integer  "album_id"
     t.integer  "track_id"
@@ -41,6 +44,9 @@ ActiveRecord::Schema.define(:version => 20100316224220) do
     t.datetime "updated_at"
   end
 
+  add_index "albums", ["artist_id"], :name => "index_albums_on_artist_id"
+  add_index "albums", ["name"], :name => "index_albums_on_name"
+
   create_table "artistaliases", :force => true do |t|
     t.integer  "artist_id"
     t.string   "name"
@@ -50,6 +56,9 @@ ActiveRecord::Schema.define(:version => 20100316224220) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "artistaliases", ["artist_id"], :name => "index_artistaliases_on_artist_id"
+  add_index "artistaliases", ["name"], :name => "index_artistaliases_on_name"
 
   create_table "artists", :force => true do |t|
     t.string   "mbid"
@@ -62,6 +71,9 @@ ActiveRecord::Schema.define(:version => 20100316224220) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "artists", ["name"], :name => "index_artists_on_name"
+  add_index "artists", ["sortname"], :name => "index_artists_on_sortname"
 
   create_table "assets", :force => true do |t|
     t.string   "data_file_name"
@@ -97,6 +109,8 @@ ActiveRecord::Schema.define(:version => 20100316224220) do
     t.datetime "file_updated_at"
   end
 
+  add_index "audio_files", ["file_file_name"], :name => "index_audio_files_on_file_file_name"
+
   create_table "collection_audio_files", :force => true do |t|
     t.integer  "collection_id",                         :null => false
     t.integer  "audio_file_ids",                        :null => false
@@ -107,8 +121,8 @@ ActiveRecord::Schema.define(:version => 20100316224220) do
   end
 
   create_table "collections", :force => true do |t|
-    t.integer  "user_id",                         :null => false
-    t.string   "name",            :default => "", :null => false
+    t.integer  "user_id",                        :null => false
+    t.string   "name",                           :null => false
     t.datetime "last_update"
     t.integer  "trackcount",      :default => 0
     t.integer  "albumcount",      :default => 0
@@ -146,6 +160,8 @@ ActiveRecord::Schema.define(:version => 20100316224220) do
     t.datetime "updated_at"
   end
 
+  add_index "puids", ["puid"], :name => "index_puids_on_puid"
+
   create_table "releases", :force => true do |t|
     t.integer  "album_id"
     t.integer  "country_id"
@@ -158,6 +174,9 @@ ActiveRecord::Schema.define(:version => 20100316224220) do
     t.datetime "updated_at"
   end
 
+  add_index "releases", ["album_id"], :name => "index_releases_on_album_id"
+  add_index "releases", ["barcode"], :name => "index_releases_on_barcode"
+
   create_table "trackpuids", :force => true do |t|
     t.integer  "puid_id"
     t.integer  "track_id"
@@ -165,6 +184,9 @@ ActiveRecord::Schema.define(:version => 20100316224220) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "trackpuids", ["puid_id"], :name => "index_trackpuids_on_puid_id"
+  add_index "trackpuids", ["track_id"], :name => "index_trackpuids_on_track_id"
 
   create_table "tracks", :force => true do |t|
     t.integer  "artist_id"
@@ -177,6 +199,10 @@ ActiveRecord::Schema.define(:version => 20100316224220) do
     t.datetime "updated_at"
   end
 
+  add_index "tracks", ["artist_id"], :name => "index_tracks_on_artist_id"
+  add_index "tracks", ["mbid"], :name => "index_tracks_on_mbid"
+  add_index "tracks", ["name"], :name => "index_tracks_on_name"
+
   create_table "urls", :force => true do |t|
     t.integer  "mbid"
     t.string   "url"
@@ -188,15 +214,15 @@ ActiveRecord::Schema.define(:version => 20100316224220) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "login",               :default => "", :null => false
-    t.string   "email",               :default => "", :null => false
-    t.string   "crypted_password",    :default => "", :null => false
-    t.string   "password_salt",       :default => "", :null => false
-    t.string   "persistence_token",   :default => "", :null => false
-    t.string   "single_access_token", :default => "", :null => false
-    t.string   "perishable_token",    :default => "", :null => false
-    t.integer  "login_count",         :default => 0,  :null => false
-    t.integer  "failed_login_count",  :default => 0,  :null => false
+    t.string   "login",                              :null => false
+    t.string   "email",                              :null => false
+    t.string   "crypted_password",                   :null => false
+    t.string   "password_salt",                      :null => false
+    t.string   "persistence_token",                  :null => false
+    t.string   "single_access_token",                :null => false
+    t.string   "perishable_token",                   :null => false
+    t.integer  "login_count",         :default => 0, :null => false
+    t.integer  "failed_login_count",  :default => 0, :null => false
     t.datetime "last_request_at"
     t.datetime "current_login_at"
     t.datetime "last_login_at"

@@ -9,6 +9,11 @@ class Genpuid
     @file_chunk = []
   end
     
+  def self.genpuid_cmd
+    return "#{RAILS_ROOT}/vendor/genpuid/genpuid-linux/genpuid" unless RUBY_PLATFORM.grep(/linux/).empty?
+    return "#{RAILS_ROOT}/vendor/genpuid/genpuid-osx/genpuid" unless RUBY_PLATFORM.grep(/osx/).empty?
+  end
+  
   def smart_scan(dir)
     recurse(dir)
   end
@@ -48,7 +53,7 @@ class Genpuid
   def fingerprint(dir)
     puts '' * 10
     proxy = URI.parse ENV['http_proxy']
-    command = "#{SETTINGS[:genpuid_exe]} #{SETTINGS[:gen_key]} -m3lib=music.m3lib -proxy #{proxy.host} -xml  -r #{dir}"
+    command = "#{Genpuid.genpuid_cmd} #{SETTINGS[:gen_key]}  -proxy #{proxy.host} -xml  -r #{dir}"
     puts command
     begin
       status = Open4.popen4(command) do |pid, stdin, stdout, stderr|
@@ -60,7 +65,8 @@ class Genpuid
           (xml_output/:track).each do |track|
             file, puid, status = track.attributes['file'], track.attributes['puid'], track.attributes['status']
               set_metadata(file, puid, status)  if puid
-              p "Puid doen't exist for #{track.attributes['file']} - #{track.attributes['status']}" unless puid
+              Lastfm.new(@collection).fingerprint(file) unless puid.nil?
+              p "Puid doen't exist for #{track.attributes['file']} - #{track.attributes['status']}" unless puid.nil?
           end
         end
       end
@@ -83,4 +89,6 @@ class Genpuid
       
     end
   end
+  
+  
 end

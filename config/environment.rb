@@ -13,7 +13,6 @@ Rails::Initializer.run do |config|
 end
 
 SETTINGS = {
-  :genpuid_exe => File.join( RAILS_ROOT, 'vendor', 'genpuid', 'genpuid' ),
   :gen_key => '57aae6071e74345f69143baa210bda87',
   :lastfm_exe => File.join(RAILS_ROOT, 'vendor', 'lastfm', 'lastfmfpclient'), 
   :lastfm_dir => File.join(RAILS_ROOT, 'vendor', 'lastfm')

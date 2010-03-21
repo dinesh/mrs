@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   acts_as_authentic
   has_many :collections, :class_name => "Collection", :foreign_key => "user_id"
-  attr_accessor :password, :password_confirmation
+  #attr_accessor :password, :password_confirmation
   
   def self.create_admin
     admin = User.find_by_login('admin')

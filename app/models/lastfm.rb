@@ -1,9 +1,3 @@
-require 'ftools'
-require 'uri'
-require 'hpricot'
-require 'open4'
-require 'scrobbler'
-require 'id3lib'
 
 class Lastfm
   attr_accessor :num_tracks, :num_albums, :num_artists, :num_audio_files
@@ -50,18 +44,36 @@ class Lastfm
   end
   
   def set_metadata(out)
-    out = File.open(File.join(RAILS_ROOT, 'test.xml')).read
+    #out = File.open(File.join(RAILS_ROOT, 'test.xml')).read
     doc = Hpricot::XML(out)
-    (doc/:track).each do |result|
+    puts "\n" * 3
+    result = (doc/:track).first
+    return if result.nil?
+   # (doc/:track).to_a.first do |result|
       artist, title = result.at(:artist).innerHTML, result.at(:title).innerHTML
       t = Scrobbler2::Track.new(artist, title)
-      p "#{t.info['name']} (#{t.info['mbid']})"
-      p "#{t.info['artist']['name']} (#{t.info['artist']['mbid']})" 
-      p "#{t.info['album']['name']} (#{t.info['album']['mbid']})"  if t.info['album']
+      artist, album = t.info['artist'], t.info['album']
+      return if (t.info.nil? || t.info['name'] || artist.nil? || album.nil?)
       
-    end
+      p "Title         : #{t.info['name']}: (#{t.info['mbid']})" 
+      p "Artist        : #{t.info['artist']['name']} (#{t.info['artist']['mbid']})"  
+      p "Album:        : #{t.info['album']['name']} (#{t.info['album']['mbid']})"  
+      
+      audio_file = AudioFile.find_by_file_file_name(File.basename(file))
+      audio_file = AudioFile.create(:file => File.open(file)) if audio_file.nil? 
+      artist_model = Artist.find(:first, :conditions => {:name => artist['name'], :mbid => artist[:mbid] })
+      artist_model = artist_model.nil? ? Artist.create({:name => artist['name'], :mbid => artist[:mbid]}) : artist_model
+      
+      album_model = Album.find(:first, :conditions => {:name => album['name'], :mbid => album[:mbid] })
+      album_model = album_model.nil? ? Album.create({:artist => artist_model, :name => album['name'], 
+                                                      :mbid => album[:mbid]}) : album_model
+                                                      
+      track_model = Track.find(:first, :conditions => {:name => t.info['name'], :artist => artist_model})
+      track_model = track_model.nil? ? Track.create({:name => t.info['name'], :artist => artist_model, 
+                                                      :audio_file => audio_file}) : track_model
+    # end
   end
   
 end
 
-Lastfm.new(1).set_metadata(1)
+
