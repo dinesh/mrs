@@ -53,7 +53,7 @@ class Genpuid
   def fingerprint(dir)
     puts '' * 10
     proxy = URI.parse ENV['http_proxy']
-    command = "#{Genpuid.genpuid_cmd} #{SETTINGS[:gen_key]} m3lib=music.m3lib -proxy #{proxy.host} -xml  -r #{dir}"
+    command = "#{Genpuid.genpuid_cmd} #{SETTINGS[:gen_key]} m3lib=music.m3lib -threads=5 -proxy #{proxy.host} -xml  -r #{dir}"
     puts command
     begin
       status = Open4.popen4(command) do |pid, stdin, stdout, stderr|

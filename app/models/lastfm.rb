@@ -37,40 +37,48 @@ class Lastfm
     puts "#{tag.title} #{tag.album} #{tag.length}"
     command = "./lastfmfpclient \"#{file}\""
     puts command
-    status = Open4.popen4(command) do |pid, stdin, stdout, stderr|
-      out, err = stdout.read.strip, stderr.read.chomp 
-      set_metadata(out) 
+    begin
+      status = Open4.popen4(command) do |pid, stdin, stdout, stderr|
+        out, err = stdout.read.strip, stderr.read.chomp 
+        set_metadata(out, file) 
+      end
+    rescue Exception => e
+      puts "#{e.class} : #{e.message}"
     end
   end
   
-  def set_metadata(out)
+  def set_metadata(out, file)
     #out = File.open(File.join(RAILS_ROOT, 'test.xml')).read
     doc = Hpricot::XML(out)
-    puts "\n" * 3
     result = (doc/:track).first
     return if result.nil?
    # (doc/:track).to_a.first do |result|
       artist, title = result.at(:artist).innerHTML, result.at(:title).innerHTML
       t = Scrobbler2::Track.new(artist, title)
-      artist, album = t.info['artist'], t.info['album']
-      return if (t.info.nil? || artist.nil? || album.nil?)
+      return if t.info.nil?
+      artist, album = t.info['artist'], t.info['album'] 
       
+      return if (t.info['name'].nil? || artist.nil? || artist['name'].nil? ) 
+      puts "\n" * 3
       p "Title         : #{t.info['name']}: (#{t.info['mbid']})" 
       p "Artist        : #{t.info['artist']['name']} (#{t.info['artist']['mbid']})"  
-      p "Album:        : #{t.info['album']['name']} (#{t.info['album']['mbid']})"  
-      
+    
       audio_file = AudioFile.find_by_file_file_name(File.basename(file))
       audio_file = AudioFile.create(:file => File.open(file)) if audio_file.nil? 
-      artist_model = Artist.find(:first, :conditions => {:name => artist['name'], :mbid => artist[:mbid] })
-      artist_model = artist_model.nil? ? Artist.create({:name => artist['name'], :mbid => artist[:mbid]}) : artist_model
       
-      album_model = Album.find(:first, :conditions => {:name => album['name'], :mbid => album[:mbid] })
-      album_model = album_model.nil? ? Album.create({:artist => artist_model, :name => album['name'], 
-                                                      :mbid => album[:mbid]}) : album_model
-                                                      
-      track_model = Track.find(:first, :conditions => {:name => t.info['name'], :artist => artist_model})
+      artist_model = Artist.find(:first, :conditions => {:name => artist['name'], :mbid => artist['mbid'] })
+      artist_model = artist_model.nil? ? Artist.create({:name => artist['name'], :mbid => artist['mbid']}) : artist_model
+      
+      track_model = Track.find(:first, :conditions => {:name => t.info['name'], :artist_id => artist_model.id })
       track_model = track_model.nil? ? Track.create({:name => t.info['name'], :artist => artist_model, 
                                                       :audio_file => audio_file}) : track_model
+     
+      return if ( album.nil? || album['name'].nil? )
+      p "Album:        : #{t.info['album']['name']} (#{t.info['album']['mbid']})"  
+      album_model = Album.find(:first, :conditions => {:name => album['name'], :mbid => album['mbid'], :artist_id => artist_model.id })
+      album_model = album_model.nil? ? Album.create({:artist => artist_model, :name => album['name'], 
+                                                      :mbid => album['mbid']}) : album_model
+                                                      
     # end
   end
   
