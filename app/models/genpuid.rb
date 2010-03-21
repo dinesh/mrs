@@ -32,12 +32,12 @@ class Genpuid
       entry = File.join(dir, entry)
       if File.file?(entry) and File.extname(entry) == '.mp3'
         @file_chunk.push(entry) 
-        process(@file_chunk) if @file_chunk.size >= 40
+        process(@file_chunk) if @file_chunk.size >= 10
       elsif File.directory?(entry) && entry != '.' && entry != '..'
         recurse(entry)
       end
     end
-    process(@file_chunk) if @file_chunk.size > 20
+    process(@file_chunk) if @file_chunk.size > 5
   end
   
   def process(files)
@@ -53,7 +53,7 @@ class Genpuid
   def fingerprint(dir)
     puts '' * 10
     proxy = URI.parse ENV['http_proxy']
-    command = "#{Genpuid.genpuid_cmd} #{SETTINGS[:gen_key]}  -proxy #{proxy.host} -xml  -r #{dir}"
+    command = "#{Genpuid.genpuid_cmd} #{SETTINGS[:gen_key]} m3lib=music.m3lib -proxy #{proxy.host} -xml  -r #{dir}"
     puts command
     begin
       status = Open4.popen4(command) do |pid, stdin, stdout, stderr|

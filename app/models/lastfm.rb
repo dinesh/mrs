@@ -53,7 +53,7 @@ class Lastfm
       artist, title = result.at(:artist).innerHTML, result.at(:title).innerHTML
       t = Scrobbler2::Track.new(artist, title)
       artist, album = t.info['artist'], t.info['album']
-      return if (t.info.nil? || t.info['name'] || artist.nil? || album.nil?)
+      return if (t.info.nil? || artist.nil? || album.nil?)
       
       p "Title         : #{t.info['name']}: (#{t.info['mbid']})" 
       p "Artist        : #{t.info['artist']['name']} (#{t.info['artist']['mbid']})"  
